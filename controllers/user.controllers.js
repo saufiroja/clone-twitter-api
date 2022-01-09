@@ -31,7 +31,7 @@ exports.getProfileUser = async (req, res, next) => {
       return next(createError(401, 'unauthorized'));
     }
 
-    const userProfile = await User.findOne({ where: { id } });
+    const user = await User.findOne({ where: { id } });
     if (!userProfile) {
       return next(createError(404, 'user not found'));
     }
@@ -39,7 +39,7 @@ exports.getProfileUser = async (req, res, next) => {
     return res.status(200).json({
       message: 'successfully get profile',
       code: 200,
-      user: userProfile,
+      user,
     });
   } catch (error) {
     next(error);
@@ -49,11 +49,22 @@ exports.getProfileUser = async (req, res, next) => {
 // UPDATE USER
 exports.updateUser = async (req, res, next) => {
   try {
-    const { user } = req;
-    const { username } = req.params;
-    if (!user) {
+    const { id } = req.user;
+    const { firstName, lastName } = req.body;
+    if (!id) {
       return next(createError(401, 'unauthorized'));
     }
+
+    const user = await User.update({ firstName, lastName }, { where: { id } });
+    if (!user) {
+      return next(createError(404, 'user not found'));
+    }
+
+    return res.status(201).json({
+      message: 'successfully update user',
+      code: 201,
+      user,
+    });
   } catch (error) {
     next(error);
   }
