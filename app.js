@@ -7,6 +7,7 @@ const app = express();
 
 // IMPORT ROUTERS
 const authRouter = require('./routers/auth.routers');
+const userRouter = require('./routers/user.routers');
 
 // DATABASE CONNECTION
 require('./database/models/sequelize');
@@ -18,6 +19,7 @@ app.use(morgan('dev'));
 
 // ROUTER
 app.use('/api', authRouter);
+app.use('/api', userRouter);
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {

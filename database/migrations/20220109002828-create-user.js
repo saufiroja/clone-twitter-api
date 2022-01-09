@@ -36,9 +36,6 @@ module.exports = {
         defaultValue:
           'https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png',
       },
-      channelDescription: {
-        type: Sequelize.STRING,
-      },
       isAdmin: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

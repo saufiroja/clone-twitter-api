@@ -39,9 +39,6 @@ User.init(
       defaultValue:
         'https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png',
     },
-    channelDescription: {
-      type: DataTypes.STRING,
-    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

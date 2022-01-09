@@ -8,7 +8,11 @@ const { readFileSync } = require('fs');
 const { JWT_PUBLIC_KEY, JWT_EXPIRES_IN } = process.env;
 
 const genereteAccessToken = (user) => {
-  const payload = { id: user.id, isAdmin: user.isAdmin };
+  const payload = {
+    id: user.id,
+    username: user.username,
+    isAdmin: user.isAdmin,
+  };
   const secret = readFileSync(JWT_PUBLIC_KEY, { encoding: 'utf-8' });
 
   const token = jwt.sign(payload, secret, {
