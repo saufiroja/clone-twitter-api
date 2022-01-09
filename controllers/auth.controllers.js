@@ -1,23 +1,27 @@
-require('dotenv').config();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
-const { readFileSync } = require('fs');
 
-const { User, RefreshToken } = require('../database/models');
-const { randomBytes } = require('crypto');
-const { addDays } = require('date-fns');
-const { JWT_PUBLIC_KEY, JWT_EXPIRES_IN } = process.env;
+const { User } = require('../database/models');
+const {
+  genereteAccessToken,
+  generateRefreshToken,
+} = require('../middlewares/token.middleware');
 
 // SIGNUP
 exports.signup = async (req, res, next) => {
   try {
     const { firstName, lastName, username, email, password } = req.body;
 
-    // check user email
+    // check email
     const isEmail = await User.findOne({ where: { email } });
     if (isEmail) {
       return next(createError(400, 'email already exists'));
+    }
+
+    // check username
+    const isUsername = await User.findOne({ where: { username } });
+    if (isUsername) {
+      return next(createError(400, 'username already exists'));
     }
 
     // NEW USER
@@ -75,24 +79,4 @@ exports.login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-const genereteAccessToken = (user) => {
-  const payload = { id: user.id, isAdmin: user.isAdmin };
-  const secret = readFileSync(JWT_PUBLIC_KEY, { encoding: 'utf-8' });
-
-  const token = jwt.sign(payload, secret, {
-    expiresIn: parseInt(JWT_EXPIRES_IN),
-  });
-  return token;
-};
-
-const generateRefreshToken = async (userId) => {
-  const token = `${userId}.${randomBytes(40).toString('hex')}`;
-
-  return await RefreshToken.create({
-    refreshToken: token,
-    userId,
-    expiredAt: addDays(new Date(), 7),
-  });
 };
