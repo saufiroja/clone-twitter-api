@@ -1,8 +1,11 @@
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
+const { readFileSync } = require('fs');
 
 const { User } = require('../database/models');
+const { JWT_PUBLIC_KEY, JWT_EXPIRES_IN } = process.env;
 
 // SIGNUP
 exports.signup = async (req, res, next) => {
@@ -20,13 +23,18 @@ exports.signup = async (req, res, next) => {
       firstName,
       lastName,
       username,
+      email,
       password,
+      isAdmin: false,
     });
+
+    const accessToken = genereteAccessToken(user);
 
     return res.status(201).json({
       message: 'successfully signup user',
       code: 201,
       user,
+      accessToken,
     });
   } catch (error) {
     next(error);
@@ -50,6 +58,8 @@ exports.login = async (req, res, next) => {
       return next(createError(400, 'invalid password'));
     }
 
+    const accessToken = genereteAccessToken(user);
+
     return res.status(200).json({
       message: 'successfully login user',
       code: 200,
@@ -58,4 +68,12 @@ exports.login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+const genereteAccessToken = (user) => {
+  const payload = { id: user.id, isAdmin: user.isAdmin };
+  const secret = readFileSync(JWT_PUBLIC_KEY, { encoding: 'utf-8' });
+
+  const token = jwt.sign(payload, secret, { expiresIn: JWT_EXPIRES_IN });
+  return token;
 };

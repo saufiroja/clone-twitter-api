@@ -42,7 +42,7 @@ User.init(
     channelDescription: {
       type: DataTypes.STRING,
     },
-    idAdmin: {
+    isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
