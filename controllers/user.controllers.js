@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 
-const { User } = require('../database/models');
+const { User, RefreshToken } = require('../database/models');
 
 // GET PROFILE
 exports.getProfile = async (req, res, next) => {
@@ -11,7 +11,7 @@ exports.getProfile = async (req, res, next) => {
     }
 
     const profile = await User.findAll({
-      attributes: ['firstName', 'lastName', 'username', 'email'],
+      attributes: ['name', 'username', 'email'],
     });
     return res.status(200).json({
       message: 'successfully get all profile',
@@ -32,7 +32,7 @@ exports.getProfileUser = async (req, res, next) => {
     }
 
     const user = await User.findOne({ where: { id } });
-    if (!userProfile) {
+    if (!user) {
       return next(createError(404, 'user not found'));
     }
 
@@ -50,12 +50,12 @@ exports.getProfileUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const { firstName, lastName } = req.body;
+    const { name, bio, avatar } = req.body;
     if (!id) {
       return next(createError(401, 'unauthorized'));
     }
 
-    const user = await User.update({ firstName, lastName }, { where: { id } });
+    const user = await User.update({ name, bio, avatar }, { where: { id } });
     if (!user) {
       return next(createError(404, 'user not found'));
     }
