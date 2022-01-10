@@ -8,6 +8,7 @@ const app = express();
 // IMPORT ROUTERS
 const authRouter = require('./routers/auth.routers');
 const userRouter = require('./routers/user.routers');
+const tweetRouter = require('./routers/tweet.routers');
 
 // DATABASE CONNECTION
 require('./database/models/sequelize');
@@ -20,6 +21,7 @@ app.use(morgan('dev'));
 // ROUTER
 app.use('/api', authRouter);
 app.use('/api', userRouter);
+app.use('/api', tweetRouter);
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {

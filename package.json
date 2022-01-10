@@ -1,7 +1,7 @@
 {
-  "name": "clone-youtube",
+  "name": "clone-twitter",
   "version": "1.0.0",
-  "description": "Clone Youtube",
+  "description": "Clone twitter",
   "main": "app.js",
   "scripts": {
     "start": "node app",

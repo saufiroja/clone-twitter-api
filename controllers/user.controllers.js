@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 
-const { User, RefreshToken } = require('../database/models');
+const { User } = require('../database/models');
 
 // GET PROFILE
 exports.getProfile = async (req, res, next) => {
