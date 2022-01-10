@@ -9,11 +9,7 @@ module.exports = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
       },
-      firstName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      lastName: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -35,6 +31,14 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue:
           'https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png',
+      },
+      gender: {
+        type: Sequelize.ENUM(['Female', 'Male']),
+        allowNull: false,
+      },
+      bio: {
+        type: Sequelize.TEXT,
+        defaultValue: '',
       },
       isAdmin: {
         type: Sequelize.BOOLEAN,

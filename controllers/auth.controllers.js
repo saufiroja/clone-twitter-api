@@ -10,7 +10,7 @@ const {
 // SIGNUP
 exports.signup = async (req, res, next) => {
   try {
-    const { firstName, lastName, username, email, password } = req.body;
+    const { name, username, email, password, gender } = req.body;
 
     // check email
     const isEmail = await User.findOne({ where: { email } });
@@ -26,11 +26,11 @@ exports.signup = async (req, res, next) => {
 
     // NEW USER
     const user = await User.create({
-      firstName,
-      lastName,
+      name,
       username,
       email,
       password,
+      gender,
       isAdmin: false,
     });
 

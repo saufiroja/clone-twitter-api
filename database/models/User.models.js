@@ -12,11 +12,7 @@ User.init(
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -38,6 +34,14 @@ User.init(
       type: DataTypes.STRING,
       defaultValue:
         'https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png',
+    },
+    gender: {
+      type: DataTypes.ENUM(['Female', 'Male']),
+      allowNull: false,
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      defaultValue: '',
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
