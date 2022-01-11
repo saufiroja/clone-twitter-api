@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
 const { signup, login } = require('../controllers/auth.controllers');
-const { veirfyUser } = require('../middlewares/jwt.middlewares');
 const { signupSchema, loginSchema } = require('../middlewares/joi/auth.schema');
 const { validate } = require('../middlewares/joi/joi.middlewares');
 
