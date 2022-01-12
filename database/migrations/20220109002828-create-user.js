@@ -29,8 +29,7 @@ module.exports = {
       },
       avatar: {
         type: Sequelize.STRING,
-        defaultValue:
-          'https://res.cloudinary.com/tylerdurden/image/upload/v1617334073/random/Rectangle_2_mbyujf.png',
+        defaultValue: '',
       },
       gender: {
         type: Sequelize.ENUM(['Female', 'Male']),

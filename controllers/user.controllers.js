@@ -50,12 +50,20 @@ exports.getProfileUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const { name, bio, avatar } = req.body;
+    const { name, bio } = req.body;
+    const { originalname } = req.file;
     if (!id) {
       return next(createError(401, 'unauthorized'));
     }
 
-    const user = await User.update({ name, bio, avatar }, { where: { id } });
+    const user = await User.update(
+      {
+        name,
+        bio,
+        avatar: originalname,
+      },
+      { where: { id } }
+    );
     if (!user) {
       return next(createError(404, 'user not found'));
     }
