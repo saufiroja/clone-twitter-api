@@ -71,7 +71,7 @@ exports.findAllTweet = async (req, res, next) => {
   }
 };
 
-// DELET TWEET FROM USER
+// DELETE TWEET FROM USER
 exports.deleteTweet = async (req, res, next) => {
   try {
     const { id } = req.user;

@@ -1,18 +1,55 @@
 const createError = require('http-errors');
 
-const { User } = require('../database/models');
+const { User, Tweet } = require('../database/models');
 
-// GET PROFILE
-exports.getProfile = async (req, res, next) => {
+// GET USER QUERY
+exports.getQueryUser = async (req, res, next) => {
   try {
-    const { user } = req;
-    if (!user) {
+    const { id } = req.user;
+    const { name } = req.query;
+    if (!id) {
       return next(createError(401, 'unauthorized'));
     }
 
-    const profile = await User.findAll({
-      attributes: ['name', 'username', 'email'],
+    const profile = await User.findOne({
+      where: { name },
+      attributes: ['name', 'username', 'password'],
+      include: { model: Tweet },
     });
+
+    if (!profile) {
+      return next(createError(404, 'user not found'));
+    }
+
+    return res.status(200).json({
+      message: 'successfully get name user',
+      code: 200,
+      user: profile,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET USER
+exports.getProfile = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const { name } = req.params;
+    if (!id) {
+      return next(createError(401, 'unauthorized'));
+    }
+
+    const profile = await User.findOne({
+      where: { name },
+      attributes: ['name', 'username', 'email'],
+      include: { model: Tweet },
+    });
+
+    if (!profile) {
+      return next(createError(404, 'user not found'));
+    }
+
     return res.status(200).json({
       message: 'successfully get all profile',
       code: 200,
