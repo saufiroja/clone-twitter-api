@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 
-const { Tweet } = require('../database/models');
+const { Tweet, Comment } = require('../database/models');
 
 // POST TWEET USER
 exports.createTweet = async (req, res, next) => {
@@ -35,7 +35,10 @@ exports.findAllTweetUser = async (req, res, next) => {
       return next(createError(401, 'unauthorized'));
     }
 
-    const tweet = await Tweet.findAll({ where: { userId: id } });
+    const tweet = await Tweet.findAll({
+      where: { userId: id },
+      include: { model: Comment, attributes: ['body', 'userId', 'tweetId'] },
+    });
     return res.status(200).json({
       message: 'successfully find all tweet from user',
       code: 200,
@@ -54,7 +57,9 @@ exports.findAllTweet = async (req, res, next) => {
       return next(createError(401, 'unauthorized'));
     }
 
-    const tweet = await Tweet.findAll();
+    const tweet = await Tweet.findAll({
+      include: { model: Comment, attributes: ['body', 'userId', 'tweetId'] },
+    });
     return res.status(200).json({
       message: 'successfully find all tweet',
       code: 200,
