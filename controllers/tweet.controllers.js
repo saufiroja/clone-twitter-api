@@ -6,14 +6,15 @@ const { Tweet, Comment } = require('../database/models');
 exports.createTweet = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const { body, image } = req.body;
+    const { body } = req.body;
+    const { originalname } = req.file;
     if (!id) {
       return next(createError(401, 'unauthorized'));
     }
 
     const tweet = await Tweet.create({
       body,
-      image,
+      image: originalname,
       userId: id,
     });
 

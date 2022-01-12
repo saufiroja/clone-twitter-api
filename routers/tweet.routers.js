@@ -14,11 +14,18 @@ const { veirfyUser } = require('../middlewares/jwt.middlewares');
 const { validate } = require('../middlewares/joi/joi.middlewares');
 const { tweetSchema } = require('../middlewares/joi/tweet.schema');
 const { commentSchema } = require('../middlewares/joi/comment.schema');
+const { upload } = require('../middlewares/multer.middlewares');
 
 router.get('/tweets', veirfyUser, findAllTweet);
 router.get('/user/tweets', veirfyUser, findAllTweetUser);
 
-router.post('/user/tweets', veirfyUser, validate(tweetSchema), createTweet);
+router.post(
+  '/user/tweets',
+  veirfyUser,
+  validate(tweetSchema),
+  upload.single('image'),
+  createTweet
+);
 router.delete('/user/tweets/:id', veirfyUser, deleteTweet);
 
 router.post(

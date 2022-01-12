@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const tweetSchema = Joi.object({
-  body: Joi.string().required(),
+  body: Joi.string().optional(),
   image: Joi.string().optional(),
 });
 
