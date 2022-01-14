@@ -20,6 +20,10 @@ Tweet.init(
       defaultValue: '',
       allowNull: true,
     },
+    likesCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
   {
     sequelize,

@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const {
   createTweet,
-  findAllTweet,
+  findAllTweets,
   findAllTweetUser,
   deleteTweet,
 } = require('../controllers/tweet.controllers');
@@ -16,7 +16,7 @@ const { tweetSchema } = require('../middlewares/joi/tweet.schema');
 const { commentSchema } = require('../middlewares/joi/comment.schema');
 const { upload } = require('../middlewares/multer.middlewares');
 
-router.get('/tweets', veirfyUser, findAllTweet);
+router.get('/home/tweets', veirfyUser, findAllTweets);
 router.get('/user/tweets', veirfyUser, findAllTweetUser);
 
 router.post(

@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 
-const { Tweet, Comment } = require('../database/models');
+const { Tweet, Comment, Like } = require('../database/models');
 
 // POST TWEET USER
 exports.createTweet = async (req, res, next) => {
@@ -38,7 +38,13 @@ exports.findAllTweetUser = async (req, res, next) => {
 
     const tweet = await Tweet.findAll({
       where: { userId: id },
-      include: { model: Comment, attributes: ['body', 'userId', 'tweetId'] },
+      include: [
+        {
+          model: Comment,
+          attributes: ['body', 'userId', 'tweetId'],
+        },
+        { model: Like, attributes: ['userId'] },
+      ],
     });
     return res.status(200).json({
       message: 'successfully find all tweet from user',
@@ -51,7 +57,7 @@ exports.findAllTweetUser = async (req, res, next) => {
 };
 
 // FIND ALL TWEET
-exports.findAllTweet = async (req, res, next) => {
+exports.findAllTweets = async (req, res, next) => {
   try {
     const { id } = req.user;
     if (!id) {
@@ -59,7 +65,13 @@ exports.findAllTweet = async (req, res, next) => {
     }
 
     const tweet = await Tweet.findAll({
-      include: { model: Comment, attributes: ['body', 'userId', 'tweetId'] },
+      include: [
+        {
+          model: Comment,
+          attributes: ['body', 'userId', 'tweetId'],
+        },
+        { model: Like, attributes: ['userId'] },
+      ],
     });
     return res.status(200).json({
       message: 'successfully find all tweet',

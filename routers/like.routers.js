@@ -1,8 +1,12 @@
 const router = require('express').Router();
 
 const { veirfyUser } = require('../middlewares/jwt.middlewares');
-const { createLike } = require('../controllers/like.controllers');
+const {
+  createLike,
+  getTweetLikes,
+} = require('../controllers/like.controllers');
 
-router.post('/:id/like', veirfyUser, createLike);
+router.post('/like/add', veirfyUser, createLike);
+router.get('/like/get-likes', veirfyUser, getTweetLikes);
 
 module.exports = router;
