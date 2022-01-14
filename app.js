@@ -10,6 +10,7 @@ const authRouter = require('./routers/auth.routers');
 const userRouter = require('./routers/user.routers');
 const tweetRouter = require('./routers/tweet.routers');
 const likeRouter = require('./routers/like.routers');
+const followRouter = require('./routers/follow.routers');
 
 // DATABASE CONNECTION
 require('./database/models/sequelize');
@@ -24,6 +25,7 @@ app.use('/api', authRouter);
 app.use('/api', userRouter);
 app.use('/api', tweetRouter);
 app.use('/api', likeRouter);
+app.use('/api', followRouter);
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {

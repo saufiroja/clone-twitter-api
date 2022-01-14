@@ -4,11 +4,14 @@ const { RefreshToken } = require('./RefreshToken.models');
 const { Tweet } = require('./Tweet.models');
 const { Comment } = require('./Comment.models');
 const { Like } = require('./Like.models');
+const { Follow } = require('./Follow.models');
 
 User.hasMany(RefreshToken, { foreignKey: 'userId' });
 User.hasMany(Tweet, { foreignKey: 'userId' });
 User.hasMany(Comment, { foreignKey: 'userId' });
 User.hasMany(Like, { foreignKey: 'userId' });
+User.hasMany(Follow, { foreignKey: 'followers' });
+User.hasMany(Follow, { foreignKey: 'following' });
 
 Tweet.hasMany(Comment, { foreignKey: 'tweetId' });
 Tweet.hasMany(Like, { foreignKey: 'tweetId' });
@@ -22,4 +25,12 @@ Comment.belongsTo(Tweet, { foreignKey: 'tweetId' });
 // Like.belongsTo(User, { foreignKey: 'userId' });
 // Like.belongsTo(Tweet, { foreignKey: 'tweetId' });
 
-module.exports = { User, RefreshToken, Tweet, Comment, Like, sequelize };
+module.exports = {
+  User,
+  RefreshToken,
+  Tweet,
+  Comment,
+  Like,
+  Follow,
+  sequelize,
+};
