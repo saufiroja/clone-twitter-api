@@ -11,8 +11,8 @@ const { updateSchema } = require('../middlewares/joi/user.schema');
 const { validate } = require('../middlewares/joi/joi.middlewares');
 const { upload } = require('../middlewares/multer.middlewares');
 
-router.get('/:name', veirfyUser, getProfile);
-router.get('/profile', veirfyUser, getProfileUser);
+router.get('/:username', veirfyUser, getProfile);
+router.get('/user/user-profile', veirfyUser, getProfileUser);
 
 router.get('/', veirfyUser, getQueryUser);
 
